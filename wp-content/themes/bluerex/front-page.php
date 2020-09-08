@@ -4,118 +4,96 @@
 $watch_category = get_category(3);
 if ($watch_category):
     $posts = get_posts(array('numberposts' => 3, 'category' => $watch_category->term_id, 'order' => 'ASC'));
-    ?>
-    <section class="section-watch section-tabs <?php echo bluerex_get_background('section_img', $watch_category); ?>">
+    if ($posts):
+        ?>
+        <section class="section-watch section-tabs <?php echo bluerex_get_background('section_img', $watch_category); ?>">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 mb-5">
+                        <?php if (get_field('section_header', $watch_category)): ?>
+                            <h3><?php the_field('section_header', $watch_category) ?></h3>
+                        <?php endif ?>
+                        <?php if ($watch_category->description): ?>
+                            <h4><?php echo $watch_category->description ?></h4>
+                            <?php endif ?>
+                        <ul class="nav nav-pills" id="myTab" role="tablist">
+                            <?php
+                            $data = [];
+                            $i = 0;
+                            foreach ($posts as $post):
+                                setup_postdata($post);
+                                $data[$i]['post_name'] = $post->post_name;
+                                $data[$i]['url'] = get_the_permalink();
+                                $data[$i]['content'] = get_the_content('');
+                                ?>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link <?php if (!$i) echo 'active'; ?> rounded-pill"
+                                        id="<?php echo $post->post_name; ?>-tab"
+                                        data-toggle="tab"
+                                        href="#<?php echo $post->post_name; ?>"
+                                        role="tab"
+                                        aria-controls="webdesign"
+                                        aria-selected="true"
+                                        ><?php the_title() ?></a
+                                    >
+                                </li>
+                                <?php
+                                $i++;
+                            endforeach;
+                            ?>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+        <?php foreach ($data as $key => $value): ?>
+                                <div
+                                    class="tab-pane fade show <?php if (!$key) echo 'active'; ?>"
+                                    id="<?php echo $value['post_name']; ?>"
+                                    role="tabpanel"
+                                    aria-labelledby="<?php echo $value['post_name']; ?>-tab"
+                                    >
+            <?php echo $value['content']; ?>
+                                    <p><a href="<?php echo $value['url']; ?>" class="btn btn-pink btn-shadow"><?php echo __('Read more', 'bluerex'); ?></a></p>
+                                </div>
+        <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <!-- /.col-md-6 -->
+
+                    <div class="col-lg-6 text-center">
+                        <?php if (get_field('section_add_image', $watch_category)): ?>
+                            <img src="<?php the_field('section_add_image', $watch_category) ?>" alt="" />
+        <?php endif; ?>
+                    </div>
+                    <!-- /.col-md-6 -->
+                </div>
+            </div>
+            <?php
+            wp_reset_postdata();
+            unset($data, $posts);
+            ?>
+        </section>
+        <!-- /.section-watch -->
+    <?php endif; //if($posts)    ?>
+<?php endif; //if ($watch_category)    ?>
+
+
+<?php
+$posts = get_posts(array('numberposts' => 3, 'category' => 4, 'order' => 'ASC'));
+if ($posts):?>  
+    <section class="section-progress text-center">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 mb-5">
-                    <?php if (get_field('section_header', $watch_category)): ?>
-                        <h3><?php the_field('section_header', $watch_category) ?></h3>
-                    <?php endif ?>
-                    <?php if ($watch_category->description): ?>
-                        <h4><?php echo $watch_category->description ?></h4>
-                    <?php endif ?>
-                    <ul class="nav nav-pills" id="myTab" role="tablist">
-                        <?php
-                        $data = [];
-                        $i = 0;
-                        foreach ($posts as $post):
-                            setup_postdata($post);
-                            $data[$i]['post_name'] = $post->post_name;
-                            $data[$i]['url'] = get_the_permalink();
-                            $data[$i]['content'] = get_the_content('');
-                            ?>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link <?php if (!$i) echo 'active'; ?> rounded-pill"
-                                    id="<?php echo $post->post_name; ?>-tab"
-                                    data-toggle="tab"
-                                    href="#<?php echo $post->post_name; ?>"
-                                    role="tab"
-                                    aria-controls="webdesign"
-                                    aria-selected="true"
-                                    ><?php the_title() ?></a
-                                >
-                            </li>
-                            <?php
-                            $i++;
-                        endforeach;
-                        ?>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <?php foreach ($data as $key => $value): ?>
-                            <div
-                                class="tab-pane fade show <?php if (!$key) echo 'active'; ?>"
-                                id="<?php echo $value['post_name']; ?>"
-                                role="tabpanel"
-                                aria-labelledby="<?php echo $value['post_name']; ?>-tab"
-                                >
-                                    <?php echo $value['content']; ?>
-                                <p><a href="<?php echo $value['url']; ?>" class="btn btn-pink btn-shadow"><?php echo __('Read more', 'bluerex'); ?></a></p>
-                            </div>
-                        <?php endforeach; ?>
+                <?php foreach ($posts as $post): ?>
+                    <div class="col-md-4 progress-item">
+        <?php echo $post->post_content ?>
                     </div>
-                </div>
-                <!-- /.col-md-6 -->
-
-                <div class="col-lg-6 text-center">
-                    <?php if (get_field('section_add_image', $watch_category)): ?>
-                        <img src="<?php the_field('section_add_image', $watch_category) ?>" alt="" />
-                    <?php endif; ?>
-                </div>
-                <!-- /.col-md-6 -->
+        <?php endforeach; ?>
             </div>
         </div>
-        <?php wp_reset_postdata();
-        unset($data, $posts);
-        ?>
+    <?php unset($posts) ?>
     </section>
-    <!-- /.section-watch -->
-<?php endif; //if ($watch_category)   ?>
-
-<section class="section-progress text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 progress-item">
-                <div><i class="fas fa-bullhorn"></i></div>
-                <div class="num">500+</div>
-                <h4><span>Successfully</span> completed projects</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Inventore aspernatur quas voluptatibus sed dolor optio architecto,
-                    praesentium ullam dolorum alias soluta deserunt quod quidem
-                    quaerat officiis ipsa quae, magnam esse?
-                </p>
-            </div>
-            <!-- /.col-md-4 progress-item -->
-            <div class="col-md-4 progress-item">
-                <div><i class="fas fa-bullhorn"></i></div>
-                <div class="num">254+</div>
-                <h4><span>Highly</span> specialised employees</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Inventore aspernatur quas voluptatibus sed dolor optio architecto,
-                    praesentium ullam dolorum alias soluta deserunt quod quidem
-                    quaerat officiis ipsa quae, magnam esse?
-                </p>
-            </div>
-            <!-- /.col-md-4 progress-item -->
-            <div class="col-md-4 progress-item">
-                <div><i class="fas fa-bullhorn"></i></div>
-                <div class="num">45+</div>
-                <h4><span>Awards</span> around the world</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Inventore aspernatur quas voluptatibus sed dolor optio architecto,
-                    praesentium ullam dolorum alias soluta deserunt quod quidem
-                    quaerat officiis ipsa quae, magnam esse?
-                </p>
-            </div>
-            <!-- /.col-md-4 progress-item -->
-        </div>
-    </div>
-</section>
-<!-- /.section-progress -->
+    <!-- /.section-progress -->
+<?php endif; //if($posts) progress ?>
 
 <section class="section-lets text-center">
     <div class="container">
