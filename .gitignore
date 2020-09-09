@@ -1,0 +1,15 @@
+# Blacklist files/folders in same directory as the .gitignore file
+/*
+
+# Whitelist some files fnd folder
+!.gitignore
+!README.md
+!/wp-content/
+
+# Blacklist files of images
+*.jp?g
+*.png
+*.gif
+*.svg
+*.pdf
+*.xls?
