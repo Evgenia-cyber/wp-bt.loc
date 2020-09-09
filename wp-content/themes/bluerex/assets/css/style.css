@@ -187,9 +187,8 @@ h4{
 
 /* =============================section-lets============================== */
 .section-lets{
-    background: url(../img/letsgrow.jpg) center no-repeat;
-    background-size: cover;
     color: #fff;
+    background-color: #525099;
 }
 
 /* =============================section-design============================== */

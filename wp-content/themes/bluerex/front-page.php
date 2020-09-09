@@ -3,116 +3,125 @@
 <?php
 $watch_category = get_category(3);
 if ($watch_category):
-    $posts = get_posts(array('numberposts' => 3, 'category' => $watch_category->term_id, 'order' => 'ASC'));
-    if ($posts):
-        ?>
-        <section class="section-watch section-tabs <?php echo bluerex_get_background('section_img', $watch_category); ?>">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 mb-5">
-                        <?php if (get_field('section_header', $watch_category)): ?>
-                            <h3><?php the_field('section_header', $watch_category) ?></h3>
-                        <?php endif ?>
-                        <?php if ($watch_category->description): ?>
-                            <h4><?php echo $watch_category->description ?></h4>
-                            <?php endif ?>
-                        <ul class="nav nav-pills" id="myTab" role="tablist">
-                            <?php
-                            $data = [];
-                            $i = 0;
-                            foreach ($posts as $post):
-                                setup_postdata($post);
-                                $data[$i]['post_name'] = $post->post_name;
-                                $data[$i]['url'] = get_the_permalink();
-                                $data[$i]['content'] = get_the_content('');
-                                ?>
-                                <li class="nav-item">
-                                    <a
-                                        class="nav-link <?php if (!$i) echo 'active'; ?> rounded-pill"
-                                        id="<?php echo $post->post_name; ?>-tab"
-                                        data-toggle="tab"
-                                        href="#<?php echo $post->post_name; ?>"
-                                        role="tab"
-                                        aria-controls="webdesign"
-                                        aria-selected="true"
-                                        ><?php the_title() ?></a
-                                    >
-                                </li>
-                                <?php
-                                $i++;
-                            endforeach;
-                            ?>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-        <?php foreach ($data as $key => $value): ?>
-                                <div
-                                    class="tab-pane fade show <?php if (!$key) echo 'active'; ?>"
-                                    id="<?php echo $value['post_name']; ?>"
-                                    role="tabpanel"
-                                    aria-labelledby="<?php echo $value['post_name']; ?>-tab"
-                                    >
-            <?php echo $value['content']; ?>
-                                    <p><a href="<?php echo $value['url']; ?>" class="btn btn-pink btn-shadow"><?php echo __('Read more', 'bluerex'); ?></a></p>
-                                </div>
-        <?php endforeach; ?>
-                        </div>
+$posts = get_posts(array('numberposts' => 3, 'category' => $watch_category->term_id, 'order' => 'ASC'));
+if ($posts):
+?>
+<section class="section-watch section-tabs <?php echo bluerex_get_background('section_img', $watch_category); ?>">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-5">
+                <?php if (get_field('section_header', $watch_category)): ?>
+                <h3><?php the_field('section_header', $watch_category) ?></h3>
+                <?php endif ?>
+                <?php if ($watch_category->description): ?>
+                <h4><?php echo $watch_category->description ?></h4>
+                <?php endif ?>
+                <ul class="nav nav-pills" id="myTab" role="tablist">
+                    <?php
+                    $data = [];
+                    $i = 0;
+                    foreach ($posts as $post):
+                    setup_postdata($post);
+                    $data[$i]['post_name'] = $post->post_name;
+                    $data[$i]['url'] = get_the_permalink();
+                    $data[$i]['content'] = get_the_content('');
+                    ?>
+                    <li class="nav-item">
+                        <a
+                            class="nav-link <?php if (!$i) echo 'active'; ?> rounded-pill"
+                            id="<?php echo $post->post_name; ?>-tab"
+                            data-toggle="tab"
+                            href="#<?php echo $post->post_name; ?>"
+                            role="tab"
+                            aria-controls="webdesign"
+                            aria-selected="true"
+                            ><?php the_title() ?></a
+                        >
+                    </li>
+                    <?php
+                    $i++;
+                    endforeach;
+                    ?>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <?php foreach ($data as $key => $value): ?>
+                    <div
+                        class="tab-pane fade show <?php if (!$key) echo 'active'; ?>"
+                        id="<?php echo $value['post_name']; ?>"
+                        role="tabpanel"
+                        aria-labelledby="<?php echo $value['post_name']; ?>-tab"
+                        >
+                            <?php echo $value['content']; ?>
+                        <p><a href="<?php echo $value['url']; ?>" class="btn btn-pink btn-shadow"><?php echo __('Read more', 'bluerex'); ?></a></p>
                     </div>
-                    <!-- /.col-md-6 -->
-
-                    <div class="col-lg-6 text-center">
-                        <?php if (get_field('section_add_image', $watch_category)): ?>
-                            <img src="<?php the_field('section_add_image', $watch_category) ?>" alt="" />
-        <?php endif; ?>
-                    </div>
-                    <!-- /.col-md-6 -->
+                    <?php endforeach; ?>
                 </div>
             </div>
-            <?php
-            wp_reset_postdata();
-            unset($data, $posts);
-            ?>
-        </section>
-        <!-- /.section-watch -->
-    <?php endif; //if($posts)    ?>
+            <!-- /.col-md-6 -->
+
+            <div class="col-lg-6 text-center">
+                <?php if (get_field('section_add_image', $watch_category)): ?>
+                <img src="<?php the_field('section_add_image', $watch_category) ?>" alt="" />
+                <?php endif; ?>
+            </div>
+            <!-- /.col-md-6 -->
+        </div>
+    </div>
+    <?php
+    wp_reset_postdata();
+    unset($data, $posts);
+    ?>
+</section>
+<!-- /.section-watch -->
+<?php endif; //if($posts)    ?>
 <?php endif; //if ($watch_category)    ?>
 
 
 <?php
 $posts = get_posts(array('numberposts' => 3, 'category' => 4, 'order' => 'ASC'));
-if ($posts):?>  
-    <section class="section-progress text-center">
-        <div class="container">
-            <div class="row">
+if ($posts):
+?>  
+<section class="section-progress text-center">
+    <div class="container">
+        <div class="row">
                 <?php foreach ($posts as $post): ?>
-                    <div class="col-md-4 progress-item">
-        <?php echo $post->post_content ?>
-                    </div>
-        <?php endforeach; ?>
+            <div class="col-md-4 progress-item">
+            <?php echo $post->post_content ?>
             </div>
+<?php endforeach; ?>
         </div>
-    <?php unset($posts) ?>
-    </section>
-    <!-- /.section-progress -->
-<?php endif; //if($posts) progress ?>
+    </div>
+<?php unset($posts) ?>
+</section>
+<!-- /.section-progress -->
+<?php endif; //if($posts) progress  ?>
 
-<section class="section-lets text-center">
+<?php
+$lets_category = get_category(5);
+if ($lets_category): 
+?>
+<section class="section-lets text-center" <?php echo bluerex_get_background('section_img', $lets_category)?>>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3>Let's Grow Together</h3>
-                <h4>We turn creative ideas into your business</h4>
+                <?php if($lets_category->name): ?>
+                <h3><?php echo $lets_category->name ?></h3>
+                <?php endif; ?>
+                <?php if(get_field('section_header', $lets_category)): ?>
+                <h4><?php the_field('section_header', $lets_category) ?></h4>
+                <?php endif; ?>
+                <?php if($lets_category->description): ?>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil
-                    ipsa voluptas delectus sed, assumenda voluptates ab adipisci
-                    perspiciatis earum magnam fugit quasi culpa, repellendus totam in
-                    unde neque sapiente quod.
+                    <?php echo $lets_category->description ?>
                 </p>
-                <p><a href="#" class="btn btn-pink btn-shadow">Read more</a></p>
+                <?php endif;?>
+                <p><a href="<?php echo get_category_link(5)?>" class="btn btn-pink btn-shadow"><?php _e('Read more', 'bluerex')?></a></p>
             </div>
         </div>
     </div>
 </section>
 <!-- /.section-lets text-center -->
+<?php endif; //if ($lets_category)     ?>
 
 <section class="section-design">
     <div class="container">
