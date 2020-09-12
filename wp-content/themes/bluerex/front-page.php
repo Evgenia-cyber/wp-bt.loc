@@ -143,7 +143,8 @@ if ($design_category):
                             <p><?php echo $design_category->description ?></p>
                         <?php endif; ?>
                         <div class="row">
-                            <?php foreach ($posts as $post):
+                            <?php
+                            foreach ($posts as $post):
                                 setup_postdata($post);
                                 ?>
                                 <div class="col-md-6 mb-3">
@@ -151,272 +152,283 @@ if ($design_category):
                                         <span><?php the_field('icon') ?></span>
                                     <?php endif; ?>
                                     <h2><?php the_title() ?></h2>
-            <?php the_content(''); ?>
+                                    <?php the_content(''); ?>
                                     <p><a href="<?php the_permalink() ?>" class="btn btn-pink btn-shadow"><?php _e('Read more', 'bluerex') ?></a></p>
                                 </div>
-        <?php endforeach; ?>
+                            <?php endforeach; ?>
                         </div>
                         <!-- /.row -->
                     </div>
                     <!-- /.col-lg-6 -->
                     <div class="col-lg-6">
-        <?php if ($video = get_field('section_video', $design_category)):
-            $video = str_replace('watch?v=','embed/', $video);
-?>
-                        <div class="embed-responsive embed-responsive-16by9 mt-5">
+                        <?php
+                        if ($video = get_field('section_video', $design_category)):
+                            $video = str_replace('watch?v=', 'embed/', $video);
+                            ?>
+                            <div class="embed-responsive embed-responsive-16by9 mt-5">
 
-                                        <iframe
-                                            id="videoPlayer"
-                                            class="embed-responsive-item"
-                                            src="<?php echo $video?>?enablejsapi=1&amp;html5=1&amp;"
-                                            allowfullscreen
-                                            ></iframe>
-                                        <div id="videoPlayBtn"></div>
-                                    </div>
-        <?php endif; ?>
+                                <iframe
+                                    id="videoPlayer"
+                                    class="embed-responsive-item"
+                                    src="<?php echo $video ?>?enablejsapi=1&amp;html5=1&amp;"
+                                    allowfullscreen
+                                    ></iframe>
+                                <div id="videoPlayBtn"></div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <!-- /.col-lg-6 -->
                 </div>
             </div>
-             <?php
+            <?php
             wp_reset_postdata();
             unset($posts);
             ?>
         </section>
         <!-- /.section-design -->
-    <?php endif; //if($posts)    ?>
+    <?php endif; //if($posts)     ?>
 <?php endif; //if ($design_category)     ?>
 
-<section class="section-work section-tabs">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 offset-md-2 text-center">
-                <h4>Our Recent Work</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Obcaecati ipsum cumque, sit earum quasi, nisi repudiandae
-                    perspiciatis culpa praesentium cupiditate, distinctio maiores
-                    mollitia. Similique quidem, harum aliquam consectetur qui ut.
-                </p>
-            </div>
-            <!-- /.col-md-8 -->
+<?php
+$work_category = get_category(7);
+//bluerex_debug($work_category);
+if ($work_category):
+    $posts = get_posts(array('numberposts' => 3, 'category' => $work_category->term_id, 'order' => 'ASC'));    //bluerex_debug($posts);
+    if ($posts):
+        ?>
+        <section class="section-work section-tabs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2 text-center">
+                        <?php if ($work_category->name): ?>
+                            <h4><?php echo $work_category->name ?></h4>
+                        <?php endif; ?>
+                        <?php if ($work_category->description): ?>
+                            <p>
+                                <?php echo $work_category->description ?>
+                            </p>
+                        <?php endif; ?>
+                    </div>
+                    <!-- /.col-md-8 -->
 
-            <div class="col-md-12">
-                <ul
-                    class="nav nav-pills justify-content-center"
-                    id="myTab-gallery"
-                    role="tablist"
-                    >
-                    <li class="nav-item">
-                        <a
-                            class="nav-link active rounded-pill"
-                            id="webdesign-tab2"
-                            data-toggle="tab"
-                            href="#webdesign2"
-                            role="tab"
-                            aria-controls="webdesign2"
-                            aria-selected="true"
-                            >Webdesign</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            class="nav-link rounded-pill"
-                            id="mobileapp-tab2"
-                            data-toggle="tab"
-                            href="#mobileapp2"
-                            role="tab"
-                            aria-controls="mobileapp2"
-                            aria-selected="false"
-                            >Mobile app</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            class="nav-link rounded-pill"
-                            id="branding-tab2"
-                            data-toggle="tab"
-                            href="#branding2"
-                            role="tab"
-                            aria-controls="branding2"
-                            aria-selected="false"
-                            >Branding</a
-                        >
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div
-                        class="tab-pane fade show active"
-                        id="webdesign2"
-                        role="tabpanel"
-                        aria-labelledby="webdesign-tab2"
-                        >
-                        <div class="gallery text-center row">
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/1.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/1_s.jpg" alt="" />
-                                </a>
+                    <div class="col-md-12">
+                        <ul
+                            class="nav nav-pills justify-content-center"
+                            id="myTab-gallery"
+                            role="tablist"
+                            >
+                                <?php
+                                $data = [];
+                                $i = 0;
+                                foreach ($posts as $post):
+                                    setup_postdata($post);
+                                    $data[$i]['post_name'] = $post->post_name;
+                                    $data[$i]['url'] = get_the_permalink();
+                                    $data[$i]['content'] = get_the_content();
+                                    ?>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link rounded-pill <?php if(!$i) echo 'active';?>"
+                                        id="<?php $post->post_name?>-tab"
+                                        data-toggle="tab"
+                                        href="#<?php echo $post->post_name?>"
+                                        role="tab"
+                                        aria-controls="<?php echo $post->post_name?>"
+                                        aria-selected="true"
+                                        ><?php the_title()?></a
+                                    >
+                                </li>
+        <?php $i++; endforeach; ?>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <?php foreach ($data as $key => $value) :?>
+                            <div
+                                class="tab-pane fade show <?php if(!$key) echo 'active';?>"
+                                id="<?php echo $value['post_name']?>"
+                                role="tabpanel"
+                                aria-labelledby="<?php echo $value['post_name']?>-tab2"
+                                >
+                                <?php echo $value['content']?>
+                                
+                                
+                                
+<!--                                <div class="gallery text-center row">
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/1.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/1_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/2.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/2_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/3.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/3_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/4.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/4_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/5.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/5_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/6.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/6_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/7.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/7_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/8.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/8_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/9.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/9_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                </div>
+                                 /.gallery -->
+
                             </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/2.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/2_s.jpg" alt="" />
-                                </a>
+                            
+<!--                            
+                            <div
+                                class="tab-pane fade"
+                                id="mobileapp2"
+                                role="tabpanel"
+                                aria-labelledby="mobileapp-tab2"
+                                >
+                                <div class="gallery text-center row">
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/4.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/4_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/5.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/5_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/6.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/6_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/1.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/1_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/2.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/2_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/3.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/3_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/7.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/7_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/8.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/8_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/9.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/9_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                </div>
+                                 /.gallery 
                             </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/3.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/3_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/4.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/4_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/5.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/5_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/6.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/6_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/7.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/7_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/8.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/8_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/9.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/9_s.jpg" alt="" />
-                                </a>
-                            </div>
+                            <div
+                                class="tab-pane fade"
+                                id="branding2"
+                                role="tabpanel"
+                                aria-labelledby="branding-tab2"
+                                >
+                                <div class="gallery text-center row">
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/7.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/7_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/8.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/8_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/9.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/9_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/1.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/1_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/2.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/2_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/3.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/3_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/4.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/4_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/5.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/5_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-4 gallery-item">
+                                        <a href="img/gallery/6.jpg">
+                                            <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/6_s.jpg" alt="" />
+                                        </a>
+                                    </div>
+                                </div>
+                                 /.gallery 
+                            </div>-->
+                           
+ <?php endforeach;?>
                         </div>
-                        <!-- /.gallery -->
                     </div>
-                    <div
-                        class="tab-pane fade"
-                        id="mobileapp2"
-                        role="tabpanel"
-                        aria-labelledby="mobileapp-tab2"
-                        >
-                        <div class="gallery text-center row">
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/4.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/4_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/5.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/5_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/6.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/6_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/1.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/1_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/2.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/2_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/3.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/3_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/7.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/7_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/8.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/8_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/9.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/9_s.jpg" alt="" />
-                                </a>
-                            </div>
-                        </div>
-                        <!-- /.gallery -->
-                    </div>
-                    <div
-                        class="tab-pane fade"
-                        id="branding2"
-                        role="tabpanel"
-                        aria-labelledby="branding-tab2"
-                        >
-                        <div class="gallery text-center row">
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/7.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/7_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/8.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/8_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/9.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/9_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/1.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/1_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/2.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/2_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/3.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/3_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/4.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/4_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/5.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/5_s.jpg" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-sm-4 gallery-item">
-                                <a href="img/gallery/6.jpg">
-                                    <img src="<?php bloginfo('template_url') ?>/assets/img/gallery/6_s.jpg" alt="" />
-                                </a>
-                            </div>
-                        </div>
-                        <!-- /.gallery -->
-                    </div>
+                    <!-- /.col-md-12 -->
                 </div>
             </div>
-            <!-- /.col-md-12 -->
-        </div>
-    </div>
-</section>
-<!-- /.section-work -->
+            <?php
+            wp_reset_postdata();
+            unset($data, $posts);
+            ?>
+        </section>
+        <!-- /.section-work -->
+    <?php endif; //if($posts)     ?>
+<?php endif; //if ($work_category)       ?>
 
 <section class="section-reviews">
     <div

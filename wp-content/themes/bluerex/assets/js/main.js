@@ -6,7 +6,7 @@ $(function(){
         });
     });
 
-	baguetteBox.run('.gallery');
+	baguetteBox.run('.wp-block-gallery');
 
 	$(window).scroll(function(){
 		if ($(this).scrollTop() > 300) {
