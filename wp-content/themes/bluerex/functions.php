@@ -151,11 +151,11 @@ function bluerex_scripts() {
     wp_deregister_script('jquery');
     wp_register_script('jquery', get_template_directory_uri() . '/assets/js/jquery-3.3.1.min.js');
     wp_enqueue_script('jquery');
-    
+
 //    wp_enqueue_script('bluerex-popper-js', get_template_directory_uri() . '/assets/js/popper.min.js', array(), '', TRUE);
-     wp_enqueue_script('bluerex-bootstrap-js', get_template_directory_uri() . '/assets/bootstrap/js/bootstrap.min.js', array(), '', TRUE);
-      wp_enqueue_script('bluerex-baguetteBox-js', get_template_directory_uri() . '/assets/js/baguetteBox.min.js', array(), '', TRUE);
-        wp_enqueue_script('bluerex-main-js', get_template_directory_uri() . '/assets/js/main.js', array(), '', TRUE);
+    wp_enqueue_script('bluerex-bootstrap-js', get_template_directory_uri() . '/assets/bootstrap/js/bootstrap.min.js', array(), '', TRUE);
+    wp_enqueue_script('bluerex-baguetteBox-js', get_template_directory_uri() . '/assets/js/baguetteBox.min.js', array(), '', TRUE);
+    wp_enqueue_script('bluerex-main-js', get_template_directory_uri() . '/assets/js/main.js', array(), '', TRUE);
 
     wp_style_add_data('bluerex-style', 'rtl', 'replace');
 
@@ -195,7 +195,6 @@ if (defined('JETPACK__VERSION')) {
     require get_template_directory() . '/inc/jetpack.php';
 }
 
-
 //Custome code
 function bluerex_debug($data) {
     echo '<pre>' . print_r($data, 1) . '</pre>';
@@ -207,4 +206,26 @@ function bluerex_get_background($field, $category = null, $cover = true) {
         return ' style="background: url(' . get_field($field, $category) . ') center center no-repeat;' . $add_style . '"';
     }
     return null;
+}
+
+add_action('init', 'bluerex_reviews');
+
+function bluerex_reviews() {
+    register_post_type('reviews', array(
+    'labels' => array(
+    'name' => 'Отзывы', // Основное название типа записи
+    'singular_name' => 'Отзыв', // отдельное название записи типа Book
+    'add_new' => __('Добавить новый отзыв', 'bluerex'),
+    'add_new_item' => __('Новый отзыв', 'bluerex'),
+    'edit_item' => __('Редактировать', 'bluerex'),
+    'new_item' => __('Новый отзыв', 'bluerex'),
+    'view_item' => __('Посмотреть', 'bluerex'),
+    'menu_name' => 'Отзывы клиентов',
+    'all_items' => 'Все отзывы'
+    ),
+        'public'=>TRUE,
+        'supports' => array('title','editor','author','thumbnail','excerpt','comments'),
+        'menu_icon' =>'dashicons-buddicons-buddypress-logo',
+        'show_in_rest'=>TRUE
+    ));
 }
