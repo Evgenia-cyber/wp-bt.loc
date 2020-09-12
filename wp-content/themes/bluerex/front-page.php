@@ -265,6 +265,12 @@ if ($work_category):
     <?php endif; //if($posts)     ?>
 <?php endif; //if ($work_category)       ?>
 
+        <?php $posts = get_posts(array(
+           'post_type' =>'reviews'
+        ));
+        if($posts):
+//        bluerex_debug($posts);
+            ?>
 <section class="section-reviews">
     <div
         id="carouselExampleIndicators"
@@ -272,87 +278,47 @@ if ($work_category):
         data-ride="carousel"
         >
         <ol class="carousel-indicators">
+            <?php for($i=0; $i<count($posts);$i++):?>
             <li
                 data-target="#carouselExampleIndicators"
-                data-slide-to="0"
-                class="active"
+                data-slide-to="<?php echo $i;?>"
+                <?php if(!$i) echo 'class="active"';?>
                 ></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <?php endfor;?>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active">
+            <?php $i=0; foreach($posts as $post):?>
+            <div class="carousel-item <?php if(!$i) echo 'active';?>">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-7">
                             <div class="carousel-caption">
-                                <h3>Our Happy Client</h3>
-                                <h4>Testimonials</h4>
+                                <?php if(get_field('review_header')):?>
+                                <h3><?php the_field('review_header')?></h3>
+                                <?php endif;?>
+                                <?php if($post->post_title):?>
+                                <h4><?php echo $post->post_title?></h4>
+                                 <?php endif;?>
                                 <blockquote class="blockquote">
                                     <p class="mb-0">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Integer posuere erat a ante.
+                                       <?php echo $post->post_content?>
                                     </p>
-                                    <footer class="blockquote-footer">Mr. John Doe</footer>
+                                     <?php if(get_field('review_autor')):?>
+                                    <footer class="blockquote-footer"><?php the_field('review_autor')?></footer> <?php endif;?>
                                 </blockquote>
                             </div>
                         </div>
                         <!-- /.col-sm-7 -->
                         <div class="col-sm-5 d-none d-sm-block">
-                            <img src="<?php bloginfo('template_url') ?>/assets/img/client.png" alt="" />
+                            <?php if(has_post_thumbnail($post->ID)):?>
+                            <?php echo get_the_post_thumbnail($post->ID) ?>
+                            <?php endif;?>
                         </div>
                         <!-- /.col-sm-5 -->
                     </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <div class="carousel-caption">
-                                <h3>Our Happy Client</h3>
-                                <h4>Testimonials</h4>
-                                <blockquote class="blockquote">
-                                    <p class="mb-0">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Integer posuere erat a ante.
-                                    </p>
-                                    <footer class="blockquote-footer">Mr. Jack</footer>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <!-- /.col-sm-7 -->
-                        <div class="col-sm-5 d-none d-sm-block">
-                            <img src="<?php bloginfo('template_url') ?>/assets/img/client.png" alt="" />
-                        </div>
-                        <!-- /.col-sm-5 -->
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <div class="carousel-caption">
-                                <h3>Our Happy Client</h3>
-                                <h4>Testimonials</h4>
-                                <blockquote class="blockquote">
-                                    <p class="mb-0">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Integer posuere erat a ante.
-                                    </p>
-                                    <footer class="blockquote-footer">Mr. David</footer>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <!-- /.col-sm-7 -->
-                        <div class="col-sm-5 d-none d-sm-block">
-                            <img src="<?php bloginfo('template_url') ?>/assets/img/client.png" alt="" />
-                        </div>
-                        <!-- /.col-sm-5 -->
-                    </div>
-                </div>
-            </div>
+        <?php $i++; endforeach;?>
         </div>
         <a
             class="carousel-control-prev"
@@ -373,8 +339,12 @@ if ($work_category):
             <span class="sr-only">Next</span>
         </a>
     </div>
+ <?php
+            unset($posts);
+            ?>
 </section>
 <!-- /.section-reviews -->
+<?php endif;?>
 
 <section class="section-form text-center">
     <div class="container">
