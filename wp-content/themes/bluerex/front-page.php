@@ -80,7 +80,7 @@ if ($watch_category):
 <?php
 $posts = get_posts(array('numberposts' => 3, 'category' => 4, 'order' => 'ASC'));
 if ($posts):
-    ?>  
+    ?>
     <section class="section-progress text-center">
         <div class="container">
             <div class="row">
@@ -249,7 +249,7 @@ if ($work_category):
                                 aria-labelledby="<?php echo $value['post_name']?>-tab2"
                                 >
                                 <?php echo $value['content']?>
-                            </div>  
+                            </div>
  <?php endforeach;?>
                         </div>
                     </div>
@@ -346,42 +346,19 @@ if ($work_category):
 <!-- /.section-reviews -->
 <?php endif;?>
 
+<?php $contact= get_page_by_title('Contact');
+if($contact):?>
 <section class="section-form text-center">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h4>Need Help?</h4>
-                <h5>Don't Forget to Contact With Us</h5>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-                    iusto modi illo quasi maiores iure expedita vel quo, magnam quia
-                    temporibus consectetur unde, repellendus odit culpa rerum.
-                    Suscipit, nihil, provident!
-                </p>
+                <?php echo do_shortcode($contact->post_content)?>
 
-                <form class="text-left">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" placeholder="Name" />
-                        </div>
-                        <div class="col-md-5">
-                            <input
-                                type="email"
-                                class="form-control"
-                                placeholder="Email"
-                                />
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-violet btn-shadow">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
 </section>
 <!-- /.section-form -->
+<?php endif;?>
 
 <?php get_footer(); ?>
