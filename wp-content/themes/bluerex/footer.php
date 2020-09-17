@@ -3,71 +3,18 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-6">
-                                <h5>Company</h5>
-                                <ul>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Aproach</a></li>
-                                    <li><a href="#">Sustainability</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                    <li><a href="#">News</a></li>
-                                </ul>
-                            </div>
-                            <!-- /.col-6 -->
-                            <div class="col-6">
-                                <h5>Company</h5>
-                                <ul>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Aproach</a></li>
-                                    <li><a href="#">Sustainability</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                    <li><a href="#">News</a></li>
-                                </ul>
-                            </div>
-                            <!-- /.col-6 -->
-                            <div class="col-6">
-                                <h5>Company</h5>
-                                <ul>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Aproach</a></li>
-                                    <li><a href="#">Sustainability</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                    <li><a href="#">News</a></li>
-                                </ul>
-                            </div>
-                            <!-- /.col-6 -->
-                            <div class="col-6">
-                                <h5>Company</h5>
-                                <ul>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Aproach</a></li>
-                                    <li><a href="#">Sustainability</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                    <li><a href="#">News</a></li>
-                                </ul>
-                            </div>
-                            <!-- /.col-6 -->
+                            <?php dynamic_sidebar('sidebar-footer-1')?>
                         </div>
                     </div>
                     <!-- /.col-md-6 -->
 
                     <div class="col-md-6 footer-images">
                         <div class="row">
-                            <div class="col-6">
-                                <img src="<?php bloginfo('template_url') ?>/assets/img/footer_img1.jpg" alt="" />
-                            </div>
-                            <div class="col-6">
-                                <img src="<?php bloginfo('template_url') ?>/assets/img/footer_img1.jpg" alt="" />
-                            </div>
-                            <div class="col-6">
-                                <img src="<?php bloginfo('template_url') ?>/assets/img/footer_img1.jpg" alt="" />
-                            </div>
-                            <div class="col-6">
-                                <img src="<?php bloginfo('template_url') ?>/assets/img/footer_img1.jpg" alt="" />
+                            <div class="col-md-12">
+                                <?php dynamic_sidebar('sidebar-footer-2')?>
                             </div>
                         </div>
                     </div>
-                    <!-- /.col-md-6 -->
                 </div>
             </div>
         </footer>
