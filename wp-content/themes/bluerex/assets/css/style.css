@@ -56,21 +56,27 @@ h4{
     min-height: 700px;
     position: relative;
 }
-.main-header .navbar-toggler{
+.main-header .navbar-toggler,
+.main-header2 .navbar-toggler{
     color: #fff;
 }
 .main-header .navbar-brand,
-.main-header ul li a{
+.main-header ul li a,
+.main-header2 .navbar-brand,
+.main-header2 ul li a{
     color: #fff;
     font-weight: 600;
 }
-.main-header .navbar-brand{
+.main-header .navbar-brand,
+.main-header2 .navbar-brand{
     font-size: 41px;
 }
-.main-header ul li a{
+.main-header ul li a,
+.main-header2 ul li a{
     font-size: 17px;
 }
-.main-header ul li a::after{
+.main-header ul li a::after,
+.main-header2 ul li a::after{
     content: '';
     display: block;
     width: 100%;
@@ -79,7 +85,8 @@ h4{
     transform: scale(0);
     transition: all .3s;
 }
-.main-header ul li a:hover::after{
+.main-header ul li a:hover::after,
+.main-header2 ul li a:hover::after{
     transform: scale(1);
 }
 .main-header-text{
