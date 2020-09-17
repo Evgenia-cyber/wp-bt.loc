@@ -3,37 +3,21 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8">
+                                    <?php if(have_posts()):while (have_posts()):the_post();?>
 					<article class="article-preview">
-						<h2><a href="single.html">Lorem ipsum dolor sit</a></h2>
-						<p><span class="article-date"><i class="far fa-calendar-alt"></i> 01.01.2000</span></p>
+                                            <h2><a href="<?php the_permalink()?>"><?php the_title()?></a></h2>
+                                            <p><span class="article-date"><i class="far fa-calendar-alt"></i><?php the_time('d.m.Y')?></span></p>
 						<div class="article-excerpt">
-							<p><a href="single.html"><img src="https://picsum.photos/250/170" alt="" class="thumb"></a>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam culpa temporibus facere quaerat cumque. Animi id neque, tempore quas earum libero aut beatae mollitia rerum repellendus, ducimus fuga, quam illum.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit officiis harum, nemo minima! Harum iste distinctio incidunt, numquam aliquid commodi. Quod odit eaque, maxime! Rem assumenda neque, tempore nulla sit?</p>
-							<p>Neque, facere facilis aliquam voluptate, magnam atque, impedit recusandae officiis minima ullam, molestiae officia optio doloremque in expedita nemo ex ipsa veniam itaque vero rerum voluptas corrupti dignissimos accusantium? Aspernatur!</p>
-							<p><a href="single.html" class="more">Read more</a></p>
-						</div>
-					</article>
-					<!-- /.article-preview -->
+                                                    <?php if(has_post_thumbnail()):?>
+                                                    <div class="bluerex-thumb"><a href="<?php the_permalink()?>"><?php the_post_thumbnail('thumbnail',array('class'=>'thumb'))?></a>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam culpa temporibus facere quaerat cumque. Animi id neque, tempore quas earum libero aut beatae mollitia rerum repellendus, ducimus fuga, quam illum.</div>>
+                                                     <?php endif;?>
+							<?php the_content('')?>
+							<p><a href="<?php the_permalink()?>" class="more"><?php _e('Read more','bluerex')?></a></p>
 
-					<article class="article-preview">
-						<h2><a href="single.html">Lorem ipsum dolor sit</a></h2>
-						<p><span class="article-date"><i class="far fa-calendar-alt"></i> 01.01.2000</span></p>
-						<div class="article-excerpt">
-							<p><a href="single.html"><img src="https://picsum.photos/250/170" alt="" class="thumb"></a>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam culpa temporibus facere quaerat cumque. Animi id neque, tempore quas earum libero aut beatae mollitia rerum repellendus, ducimus fuga, quam illum.</p>
-							<p><a href="single.html" class="more">Read more</a></p>
 						</div>
 					</article>
 					<!-- /.article-preview -->
-
-					<article class="article-preview">
-						<h2><a href="single.html">Lorem ipsum dolor sit</a></h2>
-						<p><span class="article-date"><i class="far fa-calendar-alt"></i> 01.01.2000</span></p>
-						<div class="article-excerpt">
-							<p><a href="single.html"><img src="https://picsum.photos/250/170" alt="" class="thumb"></a>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam culpa temporibus facere quaerat cumque. Animi id neque, tempore quas earum libero aut beatae mollitia rerum repellendus, ducimus fuga, quam illum.</p>
-							<p><a href="single.html" class="more">Read more</a></p>
-						</div>
-					</article>
-					<!-- /.article-preview -->
+                                        <?php endwhile;?>
 
 					<nav aria-label="...">
 						<ul class="pagination">
@@ -50,6 +34,8 @@
 							</li>
 						</ul>
 					</nav>
+                                        <?php else:?>
+                                        <?php endif;?>
 				</div>
 				<!-- /.col-md-8 -->
 
