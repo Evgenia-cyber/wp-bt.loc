@@ -24,40 +24,13 @@
                                             'mid_size' =>1,
                                             'type' => 'list'
                                         ))?>
-<!--					<nav aria-label="...">
-						<ul class="pagination">
-							<li class="page-item disabled">
-								<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-							</li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item active" aria-current="page">
-								<a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-							</li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#">Next</a>
-							</li>
-						</ul>
-					</nav>-->
 
                                         <?php else:?>
                                         <?php endif;?>
 				</div>
 				<!-- /.col-md-8 -->
 
-				<div class="col-md-4">
-					<div class="sidebar-widget widget-categories">
-						<h5 class="widget-title">Categories</h5>
-						<ul>
-							<li><a href="#">Category 1</a></li>
-							<li><a href="#">Category 2</a></li>
-							<li><a href="#">Category 3</a></li>
-							<li><a href="#">Category 4</a></li>
-							<li><a href="#">Category 5</a></li>
-						</ul>
-					</div>
-					<!-- /.sidebar-widget widget-categories -->
-				</div>
+				<?php get_sidebar()?>
 				<!-- /.col-md-4 -->
 			</div>
 		</div>

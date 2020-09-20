@@ -143,6 +143,17 @@ function bluerex_widgets_init() {
                 'after_title' => '</h5>',
             )
     );
+      register_sidebar(
+            array(
+                'name' => esc_html__('Sidebar Widgets', 'bluerex'),
+                'id' => 'sidebar-widgets',
+                'description' => esc_html__('Add widgets here.', 'bluerex'),
+                'before_widget' => '<div id="%1$s" class="sidebar-widget widget-categories widget %2$s">',
+                'after_widget' => '</div>',
+                'before_title' => '<h5 class="widget-title">',
+                'after_title' => '</h5>',
+            )
+    );
 }
 
 add_action('widgets_init', 'bluerex_widgets_init');
