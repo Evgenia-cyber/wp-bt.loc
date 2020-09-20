@@ -240,3 +240,12 @@ function bluerex_reviews() {
         'show_in_rest'=>TRUE
     ));
 }
+// удаляет H2 из шаблона пагинации
+add_filter('navigation_markup_template', 'bluerex_navigation_template', 10, 2 );
+function bluerex_navigation_template( $template, $class ){
+	return '
+	<nav class="navigation %1$s" role="navigation">
+		<div class="nav-links">%3$s</div>
+	</nav>
+	';
+}
